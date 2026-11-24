@@ -1,10 +1,13 @@
 class GnomeTextEditor < Formula
   desc "Simple, modern text editor from GNOME"
   homepage "https://apps.gnome.org/TextEditor/"
-  url "https://download.gnome.org/sources/gnome-text-editor/51/gnome-text-editor-51.0.tar.xz"
-  sha256 "2b76e6da1506346c54b36ba1a3aeedcd28f4cb7d6a8793d217f209456c92dd4c"
+  # GNOME's release plus macOS changes (Command-based shortcuts), from
+  # https://github.com/rafaeldeoliveira/gnome-text-editor (branch "macos")
+  url "https://github.com/rafaeldeoliveira/gnome-text-editor/archive/refs/tags/v51.0-macos.1.tar.gz"
+  version "51.0-macos.1"
+  sha256 "bc8093145ba7366b5d4f2ee570a99165050c34bdbcde53d4d281a6dfcadafe7e"
   license "GPL-3.0-or-later"
-  head "https://gitlab.gnome.org/GNOME/gnome-text-editor.git", branch: "main"
+  head "https://github.com/rafaeldeoliveira/gnome-text-editor.git", branch: "macos"
 
   depends_on "desktop-file-utils" => :build
   depends_on "itstool" => :build
@@ -15,6 +18,7 @@ class GnomeTextEditor < Formula
 
   depends_on "adwaita-icon-theme"
   depends_on "editorconfig"
+  depends_on "enchant" # linked directly on macOS by the fork
   depends_on "gettext"
   depends_on "glib"
   depends_on "gtk4"
@@ -133,7 +137,8 @@ class GnomeTextEditor < Formula
   end
 
   test do
-    assert_match version.to_s, shell_output("#{bin}/gnome-text-editor --version")
+    # The app reports the upstream version (51.0), not the "-macos.N" suffix
+    assert_match "Text Editor #{version.major_minor}", shell_output("#{bin}/gnome-text-editor --version")
     assert_path_exists prefix/"#{APP_NAME}.app/Contents/Resources/#{APP_ID}.icns"
     assert_predicate prefix/"#{APP_NAME}.app/Contents/MacOS/gnome-text-editor", :executable?
   end

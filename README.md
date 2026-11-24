@@ -12,9 +12,11 @@ Homebrew formulae maintained by Rafael de Oliveira.
 brew install rafaeldeoliveira/tap/gnome-text-editor
 ```
 
-This builds the editor from the official GNOME release against Homebrew's
-GTK 4 and libadwaita, and creates a `Text Editor.app` with the app icon.
-To add it to your Applications folder:
+This builds GNOME's release plus macOS changes, such as Command-based
+keyboard shortcuts, from
+[rafaeldeoliveira/gnome-text-editor](https://github.com/rafaeldeoliveira/gnome-text-editor/tree/macos)
+against Homebrew's GTK 4 and libadwaita, and creates a `Text Editor.app`
+with the app icon. To add it to your Applications folder:
 
 ```sh
 cp -R "$(brew --prefix)/opt/gnome-text-editor/Text Editor.app" /Applications/
