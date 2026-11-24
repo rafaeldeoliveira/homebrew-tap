@@ -1,16 +1,45 @@
-# Rafaeldeoliveira Tap
+# rafaeldeoliveira/tap
 
-## How do I install these formulae?
+Homebrew formulae maintained by Rafael de Oliveira.
 
-`brew install rafaeldeoliveira/tap/<formula>`
+| Formula | Description |
+|---|---|
+| `gnome-text-editor` | [GNOME Text Editor](https://apps.gnome.org/TextEditor/), the simple, modern text editor from GNOME, built for macOS |
 
-Or `brew tap rafaeldeoliveira/tap` and then `brew install <formula>`.
+## GNOME Text Editor
 
-Or, in a `brew bundle` `Brewfile`:
+```sh
+brew install rafaeldeoliveira/tap/gnome-text-editor
+```
+
+This builds the editor from the official GNOME release against Homebrew's
+GTK 4 and libadwaita, and creates a `Text Editor.app` with the app icon.
+To add it to your Applications folder:
+
+```sh
+cp -R "$(brew --prefix)/opt/gnome-text-editor/Text Editor.app" /Applications/
+```
+
+The copied app keeps working across `brew upgrade`, since it launches the
+current Homebrew build. You can also run `gnome-text-editor` from a terminal.
+
+Other commands:
+
+```sh
+brew upgrade gnome-text-editor          # update
+brew install --HEAD rafaeldeoliveira/tap/gnome-text-editor   # latest development version
+brew uninstall gnome-text-editor
+```
+
+Issues with the editor itself belong
+[upstream](https://gitlab.gnome.org/GNOME/gnome-text-editor/-/issues); issues with
+building or running it on macOS belong in this repository.
+
+## Using a Brewfile
 
 ```ruby
 tap "rafaeldeoliveira/tap"
-brew "<formula>"
+brew "gnome-text-editor"
 ```
 
 ## Documentation
