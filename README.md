@@ -75,8 +75,21 @@ when it is upgraded: add it again after `brew upgrade`.
 Items you trash in Files can be restored to where they were. Items
 trashed in Finder show up too, but have to be moved back by hand.
 
-Not available on macOS yet: the Network view, "Set as Background" and
-"Send to…".
+### Network shares
+
+Type a server address such as `smb://server/share` in the location bar
+(Command-L) or in the Network view, or pick a server the Network view
+found on your network. macOS mounts it, as in Finder's "Connect to
+Server", using its own login dialog and the Keychain; mounted shares
+show in the sidebar with an Eject button. SMB, AFP, NFS, WebDAV
+(`dav://`, `davs://`) and FTP are supported.
+
+The first time the Network view opens, macOS asks whether Files may
+find devices on your local network. Without that permission the view
+still shows connected and previous servers, but not the ones nearby. You
+can change it in System Settings › Privacy & Security › Local Network.
+
+Not available on macOS yet: "Set as Background" and "Send to…".
 
 ## Using a Brewfile
 

@@ -3,9 +3,9 @@ class Nautilus < Formula
   homepage "https://apps.gnome.org/Nautilus/"
   # GNOME's release plus macOS changes, from
   # https://github.com/rafaeldeoliveira/nautilus (branch "macos")
-  url "https://github.com/rafaeldeoliveira/nautilus/archive/refs/tags/v51.2-macos.3.tar.gz"
-  version "51.2-macos.3"
-  sha256 "6267ce5e056f768ab2c1f591ec5823b96e71f9247678ee8be63ad434b0fcfe54"
+  url "https://github.com/rafaeldeoliveira/nautilus/archive/refs/tags/v51.2-macos.4.tar.gz"
+  version "51.2-macos.4"
+  sha256 "487a5013a31a6241c6484a832aab0e21f8bdf8782753b8f1f188e511798471ba"
   license "GPL-3.0-or-later"
   head "https://github.com/rafaeldeoliveira/nautilus.git", branch: "macos"
 
@@ -85,6 +85,17 @@ class Nautilus < Formula
         <key>CFBundleVersion</key><string>#{version}</string>
         <key>LSApplicationCategoryType</key><string>public.app-category.utilities</string>
         <key>NSHighResolutionCapable</key><true/>
+        <key>NSLocalNetworkUsageDescription</key>
+        <string>Files looks for file servers on your network to show them in the Network view.</string>
+        <key>NSBonjourServices</key>
+        <array>
+          <string>_smb._tcp</string>
+          <string>_afpovertcp._tcp</string>
+          <string>_nfs._tcp</string>
+          <string>_webdavs._tcp</string>
+          <string>_webdav._tcp</string>
+          <string>_ftp._tcp</string>
+        </array>
         <key>CFBundleDocumentTypes</key>
         <array>
           <dict>
@@ -134,8 +145,11 @@ class Nautilus < Formula
       upgraded (it is not signed by an Apple developer), so add it again
       after `brew upgrade`.
 
-      Not available on macOS: the Network view, "Set as Background" and
-      "Send to…".
+      Network shares (SMB, AFP, NFS, WebDAV, FTP) are mounted by macOS, as
+      in Finder's "Connect to Server". The Network view lists servers found
+      on the local network once you allow Files to use it.
+
+      Not available on macOS: "Set as Background" and "Send to…".
     EOS
   end
 
