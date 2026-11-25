@@ -46,10 +46,11 @@ brew install rafaeldeoliveira/tap/nautilus
 
 This builds GNOME's release plus macOS changes from
 [rafaeldeoliveira/nautilus](https://github.com/rafaeldeoliveira/nautilus/tree/macos)
-and creates a `Files.app`. To add it to your Applications folder:
+and creates a `Files.app`. To add it to your Applications folder (as a
+link, so it follows upgrades):
 
 ```sh
-cp -R "$(brew --prefix)/opt/nautilus/Files.app" /Applications/
+ln -sf "$(brew --prefix)/opt/nautilus/Files.app" /Applications/
 ```
 
 Shortcuts follow Finder where GNOME's would clash with macOS: for example
@@ -57,9 +58,21 @@ Command-Shift-. shows hidden files, Command-[ and Command-] go back and
 forward, Command-Up opens the enclosing folder and Command-Backspace
 moves to the Trash.
 
-Not available on macOS yet: thumbnails, the Trash and Network views,
-"Set as Background" and "Send to…". Files you delete still go to the
-macOS Trash; open it from Finder.
+### The Trash
+
+macOS only lets apps read the Trash with Full Disk Access. To browse,
+restore, delete from and empty the Trash in Files, add `Files.app` in
+System Settings › Privacy & Security › Full Disk Access. Without it, the
+Trash opens in Finder and Empty Trash asks Finder to do it.
+
+Files isn't signed by an Apple developer, so macOS forgets the grant
+when it is upgraded: add it again after `brew upgrade`.
+
+Items you trash in Files can be restored to where they were. Items
+trashed in Finder show up too, but have to be moved back by hand.
+
+Not available on macOS yet: thumbnails, the Network view,
+"Set as Background" and "Send to…".
 
 ## Using a Brewfile
 

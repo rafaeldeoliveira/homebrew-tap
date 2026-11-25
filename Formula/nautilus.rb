@@ -3,9 +3,9 @@ class Nautilus < Formula
   homepage "https://apps.gnome.org/Nautilus/"
   # GNOME's release plus macOS changes, from
   # https://github.com/rafaeldeoliveira/nautilus (branch "macos")
-  url "https://github.com/rafaeldeoliveira/nautilus/archive/refs/tags/v51.2-macos.1.tar.gz"
-  version "51.2-macos.1"
-  sha256 "a44f2e8801db4ed2b4fed6615861190a7f5f0d24a05bbf268ae65b7676e67be5"
+  url "https://github.com/rafaeldeoliveira/nautilus/archive/refs/tags/v51.2-macos.2.tar.gz"
+  version "51.2-macos.2"
+  sha256 "1e138db17e27784e657e88a0062967ddb90746c608b7d8fd602b5e680687f767"
   license "GPL-3.0-or-later"
   head "https://github.com/rafaeldeoliveira/nautilus.git", branch: "macos"
 
@@ -60,33 +60,15 @@ class Nautilus < Formula
     system "meson", "compile", "-C", "build", "--verbose"
     system "meson", "install", "-C", "build"
 
-    # A thin .app that launches the keg's binary, so Files gets a Dock icon,
-    # a menu bar name, and can open folders from Finder's "Open With".
+    # Files.app gives Files a Dock icon and a menu bar name, and lets it open
+    # folders from Finder's "Open With". The binary itself lives in the app:
+    # macOS only applies a Full Disk Access grant (needed to show the Trash)
+    # to code inside the bundle it was granted to.
     contents = prefix/"#{APP_NAME}.app/Contents"
     (contents/"MacOS").mkpath
     (contents/"Resources").mkpath
-
-    launcher = contents/"MacOS/nautilus"
-    launcher.write <<~'SH'.sub("@BIN@", "#{opt_bin}/nautilus")
-      #!/bin/sh
-      # Apps started from Finder get no LANG; derive one from System Settings.
-      if [ -z "${LANG:-}" ]; then
-        locale_id="$(defaults read -g AppleLocale 2>/dev/null | sed 's/@.*//')"
-        if [ -n "$locale_id" ] && locale -a | grep -qx "$locale_id.UTF-8"; then
-          export LANG="$locale_id.UTF-8"
-        else
-          export LANG="en_US.UTF-8"
-        fi
-      fi
-      if [ -z "${LANGUAGE:-}" ]; then
-        languages="$(defaults read -g AppleLanguages 2>/dev/null \
-          | tr -d ' "(),' | grep -v '^$' | tr '-' '_' | paste -sd: -)"
-        [ -n "$languages" ] && export LANGUAGE="$languages"
-      fi
-      case "${1:-}" in -psn_*) shift ;; esac
-      exec "@BIN@" --new-window "$@"
-    SH
-    launcher.chmod 0755
+    (contents/"MacOS").install bin/"nautilus"
+    bin.install_symlink contents/"MacOS/nautilus"
 
     (contents/"Info.plist").write <<~XML
       <?xml version="1.0" encoding="UTF-8"?>
@@ -142,10 +124,17 @@ class Nautilus < Formula
       #{APP_NAME}.app has been installed to:
         #{opt_prefix}/#{APP_NAME}.app
 
-      To add it to your Applications folder (it keeps working across upgrades):
-        cp -R "#{opt_prefix}/#{APP_NAME}.app" /Applications/
+      To add it to your Applications folder (a link, so it follows upgrades):
+        ln -sf "#{opt_prefix}/#{APP_NAME}.app" /Applications/
 
-      Not available on macOS: thumbnails, the Trash and Network views,
+      macOS only lets apps read the Trash with Full Disk Access. To browse,
+      restore and empty the Trash in Files, add #{APP_NAME}.app in System
+      Settings > Privacy & Security > Full Disk Access. Without it, the
+      Trash opens in Finder. macOS forgets the grant when Files is
+      upgraded (it is not signed by an Apple developer), so add it again
+      after `brew upgrade`.
+
+      Not available on macOS: thumbnails, the Network view,
       "Set as Background" and "Send to…".
     EOS
   end
