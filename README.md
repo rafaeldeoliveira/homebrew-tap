@@ -58,6 +58,10 @@ Command-Shift-. shows hidden files, Command-[ and Command-] go back and
 forward, Command-Up opens the enclosing folder and Command-Backspace
 moves to the Trash.
 
+As in Finder, applications and other packages open instead of showing
+their contents (right-click › Show Package Contents to browse inside),
+and Quick Look provides thumbnails and application icons.
+
 ### The Trash
 
 macOS only lets apps read the Trash with Full Disk Access. To browse,
@@ -71,8 +75,8 @@ when it is upgraded: add it again after `brew upgrade`.
 Items you trash in Files can be restored to where they were. Items
 trashed in Finder show up too, but have to be moved back by hand.
 
-Not available on macOS yet: thumbnails, the Network view,
-"Set as Background" and "Send to…".
+Not available on macOS yet: the Network view, "Set as Background" and
+"Send to…".
 
 ## Using a Brewfile
 

@@ -3,9 +3,9 @@ class Nautilus < Formula
   homepage "https://apps.gnome.org/Nautilus/"
   # GNOME's release plus macOS changes, from
   # https://github.com/rafaeldeoliveira/nautilus (branch "macos")
-  url "https://github.com/rafaeldeoliveira/nautilus/archive/refs/tags/v51.2-macos.2.tar.gz"
-  version "51.2-macos.2"
-  sha256 "1e138db17e27784e657e88a0062967ddb90746c608b7d8fd602b5e680687f767"
+  url "https://github.com/rafaeldeoliveira/nautilus/archive/refs/tags/v51.2-macos.3.tar.gz"
+  version "51.2-macos.3"
+  sha256 "6267ce5e056f768ab2c1f591ec5823b96e71f9247678ee8be63ad434b0fcfe54"
   license "GPL-3.0-or-later"
   head "https://github.com/rafaeldeoliveira/nautilus.git", branch: "macos"
 
@@ -134,8 +134,8 @@ class Nautilus < Formula
       upgraded (it is not signed by an Apple developer), so add it again
       after `brew upgrade`.
 
-      Not available on macOS: thumbnails, the Network view,
-      "Set as Background" and "Send to…".
+      Not available on macOS: the Network view, "Set as Background" and
+      "Send to…".
     EOS
   end
 
