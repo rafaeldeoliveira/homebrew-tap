@@ -3,9 +3,9 @@ class Nautilus < Formula
   homepage "https://apps.gnome.org/Nautilus/"
   # GNOME's release plus macOS changes, from
   # https://github.com/rafaeldeoliveira/nautilus (branch "macos")
-  url "https://github.com/rafaeldeoliveira/nautilus/archive/refs/tags/v51.2-macos.4.tar.gz"
-  version "51.2-macos.4"
-  sha256 "487a5013a31a6241c6484a832aab0e21f8bdf8782753b8f1f188e511798471ba"
+  url "https://github.com/rafaeldeoliveira/nautilus/archive/refs/tags/v51.2-macos.5.tar.gz"
+  version "51.2-macos.5"
+  sha256 "85a31e1007cc364a5ef1fa479857a3f6079ebd073b656247d9a35e47e8471577"
   license "GPL-3.0-or-later"
   head "https://github.com/rafaeldeoliveira/nautilus.git", branch: "macos"
 
